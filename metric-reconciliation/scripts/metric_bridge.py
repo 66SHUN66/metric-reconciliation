@@ -90,7 +90,6 @@ def main():
     else:
         tolerance = abs(tol_val)
 
-    # definition diff
     da = flatten(a.get("definitions") or {})
     db = flatten(b.get("definitions") or {})
     keys = sorted(set(da) | set(db))
@@ -148,7 +147,6 @@ def main():
 
     os.makedirs(args.out, exist_ok=True)
 
-    # bridge table
     lines = ["# Bridge - %s (%s)" % (metric, period), ""]
     lines.append("Direction: gap = B \u2212 A, where A = %s and B = %s." % (a.get("name", "A"), b.get("name", "B")))
     lines.append("")
@@ -165,7 +163,6 @@ def main():
     with open(os.path.join(args.out, "bridge.md"), "w", encoding="utf-8") as f:
         f.write("\n".join(lines))
 
-    # memo
     mem = ["# Reconciliation memo \u2014 %s, %s" % (metric, period), ""]
     sign = "above" if gap > 0 else "below"
     if within:
@@ -182,8 +179,8 @@ def main():
     mem += ["## Verdict", "", "**%s**" % verdict, ""]
 
     mem += ["## Sources", "", "| Side | Source | Total | Unit |", "|---|---|---|---|"]
-    mem.append("| A | %s | %s | %s |" % (md(a.get("name", "A")), fmt(ta), md(data.get("unit", "")))
-    mem.append("| B | %s | %s | %s |" % (md(b.get("name", "B")), fmt(tb), md(data.get("unit", "")))
+    mem.append("| A | %s | %s | %s |" % (md(a.get("name", "A")), fmt(ta), md(data.get("unit", ""))))
+    mem.append("| B | %s | %s | %s |" % (md(b.get("name", "B")), fmt(tb), md(data.get("unit", ""))))
     mem.append("")
 
     mem += ["## Definition diff", ""]

@@ -1,0 +1,33 @@
+{
+  "metric": "Monthly active subscribers",
+  "version": "1.0",
+  "effective_from": "2026-11-01",
+  "owner": "finance-reporting",
+  "sign_off": ["finance-reporting", "product-analytics"],
+  "unit": "subscribers",
+  "contract": {
+    "population_filter": "paid subscribers only, excluding trials, comped and staff accounts",
+    "event_definition": "one successful billing period charge",
+    "time_window": "calendar month in UTC",
+    "timestamp_used": "payment time",
+    "timezone": "UTC",
+    "dedup_key": "subscription_id",
+    "refund_policy": "net of refunds, reflected in the refund month",
+    "cancellation_policy": "removed from the month of cancellation",
+    "internal_traffic": "excluded via internal_accounts table",
+    "bot_traffic": "not applicable",
+    "currency": "USD",
+    "fx_rate_policy": "monthly average rate, applied at charge time",
+    "trial_and_free_tier": "excluded",
+    "attribution_window": "not applicable",
+    "segment_joins": "left join on plan tier, unmatched rows kept and flagged"
+  },
+  "tolerance": {
+    "type": "percent_of_a",
+    "value": 0.5
+  },
+  "checks": [
+    "daily row-count comparison between billing pipeline and dashboard source",
+    "definition diff alert if either definition file changes"
+  ]
+}
